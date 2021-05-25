@@ -33,10 +33,11 @@ class ScannerListenerComponent {
         this.lastKeyDownStamp = 0;
     }
     keyInput(event) {
+        let evS = `code: '${event.code}'; key: ${event.key}; keyCode: ${event.keyCode}; charCode: ${event.charCode}`;
         const t0 = this.lastKeyDownStamp;
         this.lastKeyDownStamp = performance.now();
         const time = this.lastKeyDownStamp - t0;
-        console.log(`ScannerListener[${this.mode}]::keyInput > got event`, event);
+        console.log(`ScannerListener[${this.mode}]::keyInput > got event`, evS);
         console.log(`ScannerListener[${this.mode}]::keyInput > time is`, time);
         if (time > 1000) {
             this.keyboardInputStreak = undefined;
@@ -47,7 +48,6 @@ class ScannerListenerComponent {
             if (!this.keyboardInputStreak) {
                 return;
             }
-            console.log(`ScannerListener[${this.mode}]::keyInput > current streak is ${this.keyboardInputStreak}`);
             let convertedInput = undefined;
             const inputIsValid = this.modeMatchesScannedInputFormat(this.keyboardInputStreak);
             console.log(`ScannerListener[${this.mode}]::keyInput > input was ${inputIsValid ? 'valid' : 'invalid'}`);
@@ -64,6 +64,7 @@ class ScannerListenerComponent {
             return;
         }
         if (!isNaN(+event.key)) {
+            console.log(`ScannerListener[${this.mode}]::keyInput > current streak is ${this.keyboardInputStreak}`);
             if (!this.keyboardInputStreak) {
                 this.keyboardInputStreak = event.key;
             }
@@ -92,7 +93,7 @@ class ScannerListenerComponent {
 }
 ScannerListenerComponent.ɵfac = function ScannerListenerComponent_Factory(t) { return new (t || ScannerListenerComponent)(); };
 ScannerListenerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ScannerListenerComponent, selectors: [["my-scanner-listener"]], hostBindings: function ScannerListenerComponent_HostBindings(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keydown", function ScannerListenerComponent_keydown_HostBindingHandler($event) { return ctx.keyInput($event); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresolveWindow"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keyup", function ScannerListenerComponent_keyup_HostBindingHandler($event) { return ctx.keyInput($event); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresolveWindow"]);
     } }, outputs: { onScanned: "onScanned", onScanFailed: "onScanFailed" }, decls: 0, vars: 0, template: function ScannerListenerComponent_Template(rf, ctx) { }, encapsulation: 2 });
 
 
